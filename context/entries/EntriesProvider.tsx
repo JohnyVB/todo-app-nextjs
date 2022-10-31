@@ -11,19 +11,19 @@ const ENTRIES_INITAL_STATE: EntriesState = {
     entries: [
         {
             _id: uuidv4(),
-            description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+            description: 'Pendiente: Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
             createAt: new Date().getTime(),
             status: 'pending'
         },
         {
             _id: uuidv4(),
-            description: 'Deserunt anim proident veniam enim sunt consectetur adipisicing elit consectetur.',
+            description: 'En progreso: Deserunt anim proident veniam enim sunt consectetur adipisicing elit consectetur.',
             createAt: new Date().getTime() - 100000,
             status: 'in-progress'
         },
         {
             _id: uuidv4(),
-            description: 'Lorem tempor do pariatur laboris tempor et mollit esse sint dolore.',
+            description: 'Finalizada: Lorem tempor do pariatur laboris tempor et mollit esse sint dolore.',
             createAt: new Date().getTime() - 1000000,
             status: 'finished'
         },
