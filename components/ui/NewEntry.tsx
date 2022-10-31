@@ -4,13 +4,14 @@ import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import { EntriesContext } from '../../context/entries';
+import { UIContext } from '../../context/ui';
 
 export const NewEntry = () => {
 
-    const [isAdding, setIsAdding] = useState(false);
     const [inputValue, setInputValue] = useState('');
     const [touched, setTouched] = useState(false);
-    const { addNewEntry } = useContext(EntriesContext)
+    const { addNewEntry } = useContext(EntriesContext);
+    const { formAddingOpen, openFormAdding, closeFormAdding} = useContext(UIContext)
 
     const onTextFieldChanged = (event: ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value);
@@ -27,7 +28,7 @@ export const NewEntry = () => {
         <Box sx={{ marginBottom: 2, paddingX: 1 }}>
 
             {
-                isAdding ? (
+                formAddingOpen ? (
                     <>
                         <TextField
                             fullWidth
@@ -46,7 +47,7 @@ export const NewEntry = () => {
                             <Button
                                 variant="outlined"
                                 endIcon={<CancelOutlinedIcon />}
-                                onClick={() => setIsAdding(false)}
+                                onClick={closeFormAdding}
                             >
                                 Cancelar
                             </Button>
@@ -66,7 +67,7 @@ export const NewEntry = () => {
                         startIcon={<AddCircleOutlineOutlinedIcon />}
                         fullWidth
                         variant='outlined'
-                        onClick={() => setIsAdding(true)}
+                        onClick={openFormAdding}
                     >
                         Agregar Nueva Tarea
                     </Button>
