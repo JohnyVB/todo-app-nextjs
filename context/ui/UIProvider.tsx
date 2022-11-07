@@ -4,11 +4,13 @@ import { UIContext, UIReducer } from './';
 export interface UIState {
     sideMenuOpen: boolean;
     formAddingOpen: boolean;
+    isDragging: boolean;
 }
 
 const UI_INITIAL_STATE: UIState = {
     sideMenuOpen: false,
-    formAddingOpen: false
+    formAddingOpen: false,
+    isDragging: false
 }
 
 interface props {
@@ -20,7 +22,7 @@ export const UIProvider: FC<props> = ({ children }) => {
     const [state, dispatch] = useReducer(UIReducer, UI_INITIAL_STATE);
 
     const openSideMenu = () => {
-        dispatch({ type: 'UI - Open Siderbar'});
+        dispatch({ type: 'UI - Open Siderbar' });
     }
 
     const closeSideMenu = () => {
@@ -28,11 +30,19 @@ export const UIProvider: FC<props> = ({ children }) => {
     }
 
     const openFormAdding = () => {
-        dispatch({ type: 'UI - Open FormAdding'});
+        dispatch({ type: 'UI - Open FormAdding' });
     }
 
     const closeFormAdding = () => {
-        dispatch({ type: 'UI - Close FormAdding'});
+        dispatch({ type: 'UI - Close FormAdding' });
+    }
+
+    const startDragging = () => {
+        dispatch({ type: 'UI - Start Dragging' });
+    }
+
+    const endDragging = () => {
+        dispatch({ type: 'UI - End Dragging' });
     }
 
     return (
@@ -41,9 +51,11 @@ export const UIProvider: FC<props> = ({ children }) => {
             openSideMenu,
             closeSideMenu,
             openFormAdding,
-            closeFormAdding
+            closeFormAdding,
+            startDragging,
+            endDragging
         }}>
-            { children }
+            {children}
         </UIContext.Provider>
     )
 }
