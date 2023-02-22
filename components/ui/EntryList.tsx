@@ -12,23 +12,26 @@ interface Props {
 
 export const EntryList: FC<Props> = ({ status }) => {
 
-    const { isDragging } = useContext(UIContext);
-    
-    const { entries } = useContext(EntriesContext);
+    const { isDragging, endDragging } = useContext(UIContext);
+
+    const { entries, updateEntry } = useContext(EntriesContext);
 
     const entriesByStatus = useMemo(() => entries.filter(entry => entry.status === status), [entries]);
 
-    const allowDrop = ( event: DragEvent ) => {
+    const allowDrop = (event: DragEvent) => {
         event.preventDefault();
     }
 
-    const onDropEntry = ( event: DragEvent ) => {
+    const onDropEntry = (event: DragEvent) => {
         const id = event.dataTransfer.getData('id');
-        console.log(id);
+        const entry = entries.find(e => e._id === id)!;
+        entry.status = status;
+        updateEntry(entry);
+        endDragging();
     }
 
     return (
-        // TODO: Aqui haremos Drop
+
         <div
             onDrop={onDropEntry}
             onDragOver={allowDrop}
@@ -36,10 +39,10 @@ export const EntryList: FC<Props> = ({ status }) => {
         >
             <Paper sx={{ height: 'calc(100vh - 180px)', overflow: 'auto', backgroundColor: 'transparent', padding: '3px 5px' }}>
 
-                {/* TODO: Cambiara dependiendo si estoy haciendo un drag o no */}
+
                 <List sx={{ opacity: isDragging ? 0.2 : 1, transition: 'all .3s' }}>
                     {
-                        entriesByStatus.map( (entry, index) => (
+                        entriesByStatus.map((entry, index) => (
                             <EntryCard key={index} entry={entry} />
                         ))
                     }

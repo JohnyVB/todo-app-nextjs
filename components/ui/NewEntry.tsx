@@ -11,7 +11,7 @@ export const NewEntry = () => {
     const [inputValue, setInputValue] = useState('');
     const [touched, setTouched] = useState(false);
     const { addNewEntry } = useContext(EntriesContext);
-    const { formAddingOpen, openFormAdding, closeFormAdding} = useContext(UIContext)
+    const { formAddingOpen, openFormAdding, closeFormAdding } = useContext(UIContext)
 
     const onTextFieldChanged = (event: ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value);
@@ -56,7 +56,10 @@ export const NewEntry = () => {
                                 variant="outlined"
                                 color="secondary"
                                 endIcon={<SaveOutlinedIcon />}
-                                onClick={onSave}
+                                onClick={() => {
+                                    onSave();
+                                    closeFormAdding();
+                                }}
                             >
                                 Guardar
                             </Button>
