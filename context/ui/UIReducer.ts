@@ -1,8 +1,6 @@
 import { UIState } from "./";
 
-type UIActionType = 
-    | { type: 'UI - Open Siderbar' }
-    | { type: 'UI - Close Siderbar' }
+type UIActionType =
     | { type: 'UI - Open FormAdding' }
     | { type: 'UI - Close FormAdding' }
     | { type: 'UI - Start Dragging' }
@@ -11,17 +9,6 @@ type UIActionType =
 export const UIReducer = (state: UIState, action: UIActionType): UIState => {
 
     switch (action.type) {
-        case 'UI - Open Siderbar':
-            return {
-                ...state,
-                sideMenuOpen: true
-            }
-
-        case 'UI - Close Siderbar':
-            return {
-                ...state,
-                sideMenuOpen: false
-            }
 
         case 'UI - Open FormAdding':
             return {
@@ -46,7 +33,7 @@ export const UIReducer = (state: UIState, action: UIActionType): UIState => {
                 ...state,
                 isDragging: false
             }
-    
+
         default:
             return state;
     }

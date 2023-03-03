@@ -21,14 +21,6 @@ export const UIProvider: FC<props> = ({ children }) => {
 
     const [state, dispatch] = useReducer(UIReducer, UI_INITIAL_STATE);
 
-    const openSideMenu = () => {
-        dispatch({ type: 'UI - Open Siderbar' });
-    }
-
-    const closeSideMenu = () => {
-        dispatch({ type: 'UI - Close Siderbar' });
-    }
-
     const openFormAdding = () => {
         dispatch({ type: 'UI - Open FormAdding' });
     }
@@ -48,8 +40,6 @@ export const UIProvider: FC<props> = ({ children }) => {
     return (
         <UIContext.Provider value={{
             ...state,
-            openSideMenu,
-            closeSideMenu,
             openFormAdding,
             closeFormAdding,
             startDragging,
