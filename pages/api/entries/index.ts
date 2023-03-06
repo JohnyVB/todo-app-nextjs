@@ -15,9 +15,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
         case 'POST':
             return postEntry(req, res);
 
-        case 'PATCH':
-            return patchEntry(req, res);
-
         default:
             return res.status(400).json({ message: 'Endpoint no existe' });
     }
@@ -59,8 +56,4 @@ const postEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(error);
         return res.status(400).json({ message: 'Algo salio mal, por favor revisar' });
     }
-}
-
-const patchEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-
 }
