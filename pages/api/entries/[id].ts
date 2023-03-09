@@ -1,17 +1,20 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
-import mongoose from 'mongoose';
+import type { NextApiRequest, NextApiResponse } from 'next';
 import { connect, disconnect } from '../../../database/connection';
 import EntryModel, { IEntry } from '../../../models/EntryModel';
+import mongoose from 'mongoose';
 
 type Data =
     | { message: string }
     | IEntry
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-    const { id = '' } = req.query;
+
+    const { id } = req.query;
+
     if (!mongoose.isValidObjectId(id)) {
-        return res.status(400).json({ message: 'El id no es valido: ' + id });
+        return res.status(400).json({ message: 'Algo salio mal' })
     }
+
     switch (req.method) {
         case 'PUT':
             return putEntry(req, res);
@@ -69,7 +72,7 @@ const getEntryById = async (req: NextApiRequest, res: NextApiResponse<Data>) => 
 
         return res.status(200).json(entry);
     } catch (error) {
-        console.log({ error });
+        // console.log({ error });
         await disconnect();
         return res.status(400).json({ message: 'bad request' });
     }
