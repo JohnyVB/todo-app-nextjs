@@ -1,5 +1,5 @@
 import { List, Paper } from "@mui/material";
-import { FC, useContext, useMemo, DragEvent } from 'react';
+import { useContext, useMemo, DragEvent } from 'react';
 import { EntryStatus } from "../../interfaces";
 import { EntryCard } from "./";
 import { EntriesContext } from '../../context/entries';
@@ -10,7 +10,7 @@ interface Props {
     status: EntryStatus;
 }
 
-export const EntryList: FC<Props> = ({ status }) => {
+export const EntryList = ({ status }: Props) => {
 
     const { isDragging, endDragging } = useContext(UIContext);
 

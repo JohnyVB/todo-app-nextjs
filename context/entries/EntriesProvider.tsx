@@ -19,16 +19,24 @@ export const EntriesProvider: FC<props> = ({ children }) => {
     const [state, dispatch] = useReducer(EntriesReducer, ENTRIES_INITAL_STATE);
 
     const addNewEntry = async (description: string) => {
-        const { data } = await entriesApi.post<Entry>('/entries', { description });
-        dispatch({ type: 'Entry - Add-Entry', payload: data });
+        try {
+            const { data } = await entriesApi.post<Entry>('/entries', { description });
+            dispatch({ type: 'Entry - Add-Entry', payload: data });
+            // TODO: Notificar nueva entrada con notistack
+        } catch (error) {
+            console.log({ error });
+            // TODO: Notificar error con notistack
+        }
     }
 
     const updateEntry = async ({ _id, description, status }: Entry) => {
         try {
             const { data } = await entriesApi.put<Entry>(`/entries/${_id}`, { description, status });
             dispatch({ type: 'Entry - Updated-Entry', payload: data });
+            // TODO: Notificar actualizacion con notistack
         } catch (error) {
             console.log({ error });
+            // TODO: Notificar error con notistack
         }
     }
 

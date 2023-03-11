@@ -1,5 +1,4 @@
 import React from 'react';
-import { FC } from "react";
 import { Box } from "@mui/material"
 import Head from "next/head";
 import { Navbar } from '../ui';
@@ -9,7 +8,7 @@ interface Props {
   children?: React.ReactNode
 }
 
-export const Layout: FC<Props> = ({ title = 'OpenTODO - app', children }) => {
+export const Layout = ({ title = 'OpenTODO - app', children }: Props) => {
   return (
     <Box sx={{ flexFlow: 1 }}>
 
