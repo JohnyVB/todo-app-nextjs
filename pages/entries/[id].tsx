@@ -3,10 +3,12 @@ import { Layout } from '../../components/layouts/Layout';
 import { GetServerSideProps } from 'next'
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import BackupTableOutlinedIcon from '@mui/icons-material/BackupTableOutlined';
 import { Entry, EntryStatus } from '../../interfaces/entry';
 import { ChangeEvent, useMemo, useState, useContext } from 'react';
 import { getEntryById } from '../../database/dbEntries';
 import { EntriesContext } from '../../context/entries/EntriesContext';
+import { useRouter } from 'next/router';
 
 const validStatus: EntryStatus[] = ['pending', 'in-progress', 'finished'];
 
@@ -20,6 +22,8 @@ const EntryPage = ({ entry }: Props) => {
     const [status, setStatus] = useState<EntryStatus>(entry.status);
     const [touched, setTouched] = useState<boolean>(false);
     const { updateEntry } = useContext(EntriesContext);
+
+    const { back } = useRouter();
 
     const isNotValid = useMemo(() => inputValue.length <= 0 && touched, [inputValue, touched]);
 
@@ -40,7 +44,7 @@ const EntryPage = ({ entry }: Props) => {
             description: inputValue
         }
 
-        updateEntry(updatedEntry);
+        updateEntry(updatedEntry, true);
     }
 
     return (
@@ -100,6 +104,15 @@ const EntryPage = ({ entry }: Props) => {
                                 disabled={inputValue.length <= 0}
                             >
                                 Guardar
+                            </Button>
+                            <Button
+                                endIcon={<BackupTableOutlinedIcon />}
+                                variant='contained'
+                                color='error'
+                                fullWidth
+                                onClick={() => back()}
+                            >
+                                Atras
                             </Button>
                         </CardActions>
                     </Card>

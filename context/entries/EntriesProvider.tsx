@@ -2,6 +2,7 @@ import { FC, ReactNode, useEffect, useReducer } from 'react';
 import entriesApi from '../../api/entriesApi';
 import { Entry } from '../../interfaces';
 import { EntriesContext, EntriesReducer } from './';
+import { useSnackbar } from 'notistack';
 
 export interface EntriesState {
     entries: Entry[];
@@ -16,27 +17,42 @@ interface props {
 }
 
 export const EntriesProvider: FC<props> = ({ children }) => {
+    const { enqueueSnackbar } = useSnackbar();
     const [state, dispatch] = useReducer(EntriesReducer, ENTRIES_INITAL_STATE);
 
     const addNewEntry = async (description: string) => {
         try {
             const { data } = await entriesApi.post<Entry>('/entries', { description });
             dispatch({ type: 'Entry - Add-Entry', payload: data });
-            // TODO: Notificar nueva entrada con notistack
+            enqueueSnackbar('Nueva entrada creada', {
+                variant: 'success',
+                autoHideDuration: 1500
+            });
         } catch (error) {
             console.log({ error });
-            // TODO: Notificar error con notistack
+            enqueueSnackbar('Error al crear la entrada', {
+                variant: 'error',
+                autoHideDuration: 1500
+            });
         }
     }
 
-    const updateEntry = async ({ _id, description, status }: Entry) => {
+    const updateEntry = async ({ _id, description, status }: Entry, showNotistack: boolean = false) => {
         try {
             const { data } = await entriesApi.put<Entry>(`/entries/${_id}`, { description, status });
             dispatch({ type: 'Entry - Updated-Entry', payload: data });
-            // TODO: Notificar actualizacion con notistack
+            if (showNotistack) {
+                enqueueSnackbar('Entrada actualizada', {
+                    variant: 'success',
+                    autoHideDuration: 1500
+                });
+            }
         } catch (error) {
             console.log({ error });
-            // TODO: Notificar error con notistack
+            enqueueSnackbar('Error al actualizar la entrada', {
+                variant: 'error',
+                autoHideDuration: 1500
+            });
         }
     }
 
