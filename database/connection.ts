@@ -26,12 +26,12 @@ export const connect = async () => {
         await disconnect();
     }
 
-    await mongoose.connect(process.env.NODE_ENV === 'production' ? process.env.MONGO_ATLAS_URL || '' : process.env.MONGO_URL_DOCKER || '', {
+    await mongoose.connect(process.env.MONGO_ATLAS_URL || '', {
         dbName: 'todoappdb',
     });
 
     mongoConnection.isConnected = 1;
-    console.log('Conectado a MongoDB', process.env.NODE_ENV === 'production' ? process.env.MONGO_ATLAS_URL || '' : process.env.MONGO_URL_DOCKER || '');
+    console.log('Conectado a MongoDB', process.env.MONGO_ATLAS_URL || '');
 }
 
 export const disconnect = async () => {
