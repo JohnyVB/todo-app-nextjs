@@ -22,6 +22,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
         case 'GET':
             return getEntryById(req, res);
 
+        case 'DELETE':
+            return deleteEntry(req, res);
+
         default:
             return res.status(400).json({ message: 'Endpoint no existe' });
     }
@@ -72,7 +75,24 @@ const getEntryById = async (req: NextApiRequest, res: NextApiResponse<Data>) => 
 
         return res.status(200).json(entry);
     } catch (error) {
-        // console.log({ error });
+        console.log({ error });
+        await disconnect();
+        return res.status(400).json({ message: 'bad request' });
+    }
+}
+
+const deleteEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+
+    const { id } = req.query;
+
+    try {
+        await connect();
+        await EntryModel.findByIdAndDelete(id);
+        await disconnect();
+
+        return res.status(200).json({ message: `Entrada con el ID: ${id} eliminado de la bd` });
+    } catch (error) {
+        console.log({ error });
         await disconnect();
         return res.status(400).json({ message: 'bad request' });
     }

@@ -56,6 +56,23 @@ export const EntriesProvider: FC<props> = ({ children }) => {
         }
     }
 
+    const deleteEntry = async (entry: Entry) => {
+        try {
+            await entriesApi.delete(`/entries/${entry._id}`);
+            dispatch({ type: 'Entry - Delete-Entry', payload: entry });
+            enqueueSnackbar('Entrada eliminada', {
+                variant: 'success',
+                autoHideDuration: 3000
+            });
+        } catch (error) {
+            console.log({ error });
+            enqueueSnackbar('Error al eliminar la entrada', {
+                variant: 'error',
+                autoHideDuration: 1500
+            });
+        }
+    }
+
     const refreshEntries = async () => {
         const { data } = await entriesApi.get<Entry[]>('/entries');
         dispatch({ type: 'Entry - Refresh-Data', payload: data });
@@ -69,7 +86,8 @@ export const EntriesProvider: FC<props> = ({ children }) => {
         <EntriesContext.Provider value={{
             ...state,
             addNewEntry,
-            updateEntry
+            updateEntry,
+            deleteEntry
         }}>
             {children}
         </EntriesContext.Provider>

@@ -21,7 +21,7 @@ const EntryPage = ({ entry }: Props) => {
     const [inputValue, setInputValue] = useState<string>(entry.description);
     const [status, setStatus] = useState<EntryStatus>(entry.status);
     const [touched, setTouched] = useState<boolean>(false);
-    const { updateEntry } = useContext(EntriesContext);
+    const { updateEntry, deleteEntry } = useContext(EntriesContext);
 
     const { back } = useRouter();
 
@@ -45,6 +45,11 @@ const EntryPage = ({ entry }: Props) => {
         }
 
         updateEntry(updatedEntry, true);
+    }
+
+    const onDelete = () => {
+        deleteEntry(entry);
+        back();
     }
 
     return (
@@ -125,6 +130,7 @@ const EntryPage = ({ entry }: Props) => {
                     right: 30,
                     backgroundColor: 'red'
                 }}
+                onClick={onDelete}
             >
                 <DeleteOutlinedIcon />
             </IconButton>
