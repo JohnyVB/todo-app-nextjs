@@ -3,6 +3,7 @@ import { DragEvent, useContext } from 'react';
 import { Entry } from "../../interfaces";
 import { UIContext } from '../../context/ui/UIContext';
 import { useRouter } from "next/router";
+import { getFormatDate } from '../../utils/dateFunctions';
 
 interface Props {
     entry: Entry
@@ -40,7 +41,7 @@ export const EntryCard = ({ entry }: Props) => {
                 </CardContent>
 
                 <CardActions sx={{ display: 'flex', justifyContent: 'end', paddingRight: 2 }}>
-                    <Typography variant="body2">{entry.createAt}</Typography>
+                    <Typography variant="body2">{getFormatDate(entry.createAt)}</Typography>
                 </CardActions>
             </CardActionArea>
         </Card>

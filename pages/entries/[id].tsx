@@ -9,6 +9,7 @@ import { ChangeEvent, useMemo, useState, useContext } from 'react';
 import { getEntryById } from '../../database/dbEntries';
 import { EntriesContext } from '../../context/entries/EntriesContext';
 import { useRouter } from 'next/router';
+import { getFormatDate } from '../../utils/dateFunctions';
 
 const validStatus: EntryStatus[] = ['pending', 'in-progress', 'finished'];
 
@@ -63,7 +64,7 @@ const EntryPage = ({ entry }: Props) => {
                     <Card>
                         <CardHeader
                             title={`Entrada:`}
-                            subheader={`Creada hace: ${entry.createAt} minutos`}
+                            subheader={`Creada ${getFormatDate(entry.createAt)}`}
                         />
                         <CardContent>
                             <TextField
